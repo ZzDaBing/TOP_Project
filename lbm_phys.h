@@ -6,9 +6,9 @@
 #include "lbm_comm.h"
 
 /********************** CONSTS **********************/
-const int opposite_of[DIRECTIONS];
-const double equil_weight[DIRECTIONS];
-const Vector direction_matrix[DIRECTIONS];
+static const int opposite_of[DIRECTIONS];
+static const double equil_weight[DIRECTIONS];
+static const Vector direction_matrix[DIRECTIONS];
 
 /*******************  FUNCTION  *********************/
 //helper
