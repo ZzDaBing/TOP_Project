@@ -11,7 +11,7 @@
  * Definitions des 9 vecteurs de base utilisé pour discrétiser les directions sur chaque mailles.
 **/
 #if DIRECTIONS == 9 && DIMENSIONS == 2
-static const Vector direction_matrix[DIRECTIONS] = {
+const Vector direction_matrix[DIRECTIONS] = {
 	{+0.0,+0.0},
 	{+1.0,+0.0}, {+0.0,+1.0}, {-1.0,+0.0}, {+0.0,-1.0},
 	{+1.0,+1.0}, {-1.0,+1.0}, {-1.0,-1.0}, {+1.0,-1.0}
@@ -25,13 +25,13 @@ static const Vector direction_matrix[DIRECTIONS] = {
  * Poids utilisé pour compenser les différentes de longueur des 9 vecteurs directions.
 **/
 #if DIRECTIONS == 9
-static const double equil_weight[DIRECTIONS] = {
+const double equil_weight[DIRECTIONS] = {
 	4.0/9.0 ,
 	1.0/9.0 , 1.0/9.0 , 1.0/9.0 , 1.0/9.0,
 	1.0/36.0, 1.0/36.0, 1.0/36.0, 1.0/36.0
 };
 //opposite directions, for bounce back implementation
-static const int opposite_of[DIRECTIONS] = { 0, 3, 4, 1, 2, 7, 8, 5, 6 };
+const int opposite_of[DIRECTIONS] = { 0, 3, 4, 1, 2, 7, 8, 5, 6 };
 #else
 #error Need to defined adapted equibirium distribution function
 #endif

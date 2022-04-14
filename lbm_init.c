@@ -93,6 +93,10 @@ void setup_init_state_global_poiseuille_profile(Mesh * mesh, lbm_mesh_type_t * m
 	}
 }
 
+//     mesh=0x7fffffffde40, mesh_type=0x7fffffffde70, mesh_comm=0x7fffffffde80)
+//     at lbm_init.c:85
+// 85	Mesh_get_cell(mesh, i, j)[k] = compute_equilibrium_profile(v,density,k);
+
 /*******************  FUNCTION  *********************/
 /**
  * Initialisation des conditions aux bords.
