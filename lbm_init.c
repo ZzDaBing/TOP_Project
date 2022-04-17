@@ -38,7 +38,7 @@ void init_cond_velocity_0_density_1(Mesh * mesh)
 void setup_init_state_circle_obstacle(Mesh * mesh, lbm_mesh_type_t * mesh_type, const lbm_comm_t * mesh_comm)
 {
 	//vars
-	int i,j;
+	int i,j,k;
 
 	//loop on nodes
 	for ( i =  mesh_comm->x; i < mesh->width + mesh_comm->x ; i++)
@@ -49,8 +49,8 @@ void setup_init_state_circle_obstacle(Mesh * mesh, lbm_mesh_type_t * mesh_type, 
 			{
 
 				*( lbm_cell_type_t_get_cell( mesh_type , i - mesh_comm->x, j - mesh_comm->y) ) = CELL_BOUNCE_BACK;
-				//for ( k = 0 ; k < DIMENSIONS ; k++)
-				//	mesh[i][j][k] = 0.0;
+				// for ( k = 0 ; k < DIMENSIONS ; k++)
+				// 	Mesh_get_cell(mesh, i, j)[k] = 0.0;
 			}
 		}
 	}

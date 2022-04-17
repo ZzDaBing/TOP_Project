@@ -15,6 +15,8 @@ LBM_OBJECTS=$(LBM_SOURCES:.c=.o)
 
 TARGET=lbm display
 
+CREATEDFILES=resultat.raw output.gif
+
 all: $(TARGET)
 
 %.o: %.c
@@ -29,6 +31,7 @@ display: display.c
 clean:
 	$(RM) $(LBM_OBJECTS)
 	$(RM) $(TARGET)
+	$(RM) $(CREATEDFILES)
 
 depend:
 	$(MAKEDEPEND) -Y. $(LBM_SOURCES) display.c

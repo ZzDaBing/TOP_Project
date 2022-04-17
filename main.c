@@ -58,8 +58,6 @@ FILE * open_output_file(lbm_comm_t * mesh_comm)
 }
 
 void close_file(FILE* fp){
-	//wait all before closing
-	MPI_Barrier(MPI_COMM_WORLD);
 	//close file
 	fclose(fp);
 }
@@ -196,9 +194,13 @@ int main(int argc, char * argv[])
 		if ( i % WRITE_STEP_INTERVAL == 0 && lbm_gbl_config.output_filename != NULL )
 			save_frame_all_domain(fp, &mesh, &temp_render );
 	}
+	
+	//wait all before closing
+	MPI_Barrier(MPI_COMM_WORLD);
 
 	if( rank == RANK_MASTER && fp != NULL)
 	{
+		printf("Progress [%5d / %5d]\nEnd\n",i,ITERATIONS);
 		close_file(fp);
 	}
 
