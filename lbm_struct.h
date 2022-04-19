@@ -22,12 +22,12 @@ typedef double Vector[DIMENSIONS];
 **/
 typedef struct Mesh
 {
-	/** Cellules du maillages (MESH_WIDTH * MESH_HEIGHT). **/
-	lbm_mesh_cell_t cells;
 	/** Largeur du maillage local (mailles fantome comprises). **/
 	int width;
 	/** Largeur du maillage local (mailles fantome comprises). **/
 	int height;
+	/** Cellules du maillages (MESH_WIDTH * MESH_HEIGHT). **/
+	lbm_mesh_cell_t cells;
 } Mesh;
 
 /*********************  ENUM  ***********************/
@@ -53,12 +53,12 @@ typedef enum lbm_cell_type_e
 **/
 typedef struct lbm_mesh_type_s
 {
-	/** Type des cellules du maillages (MESH_WIDTH * MESH_HEIGHT). **/
-	lbm_cell_type_t * types;
 	/** Largeur du maillage local (mailles fantome comprises). **/
 	int width;
 	/** Largeur du maillage local (mailles fantome comprises). **/
 	int height;
+	/** Type des cellules du maillages (MESH_WIDTH * MESH_HEIGHT). **/
+	lbm_cell_type_t * types;
 } lbm_mesh_type_t;
 
 /********************  STRUCT  **********************/
@@ -87,9 +87,9 @@ typedef struct lbm_file_entry_s
 /** Pour la lecture du fichier de sortie. **/
 typedef struct lbm_data_file_s
 {
-	FILE * fp;
 	lbm_file_header_t header;
 	lbm_file_entry_t * entries;
+	FILE * fp;
 } lbm_data_file_t;
 
 

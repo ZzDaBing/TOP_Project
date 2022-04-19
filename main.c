@@ -175,13 +175,13 @@ int main(int argc, char * argv[])
 		special_cells( &mesh, &mesh_type, &mesh_comm);
 
 		//need to wait all before doing next step
-		MPI_Barrier(MPI_COMM_WORLD);
+		//MPI_Barrier(MPI_COMM_WORLD);
 
 		//compute collision term
 		collision( &temp, &mesh);
 
 		//need to wait all before doing next step
-		MPI_Barrier(MPI_COMM_WORLD);
+		//MPI_Barrier(MPI_COMM_WORLD);
 
 		//propagate values from node to neighboors
 		lbm_comm_ghost_exchange( &mesh_comm, &temp );
@@ -194,7 +194,7 @@ int main(int argc, char * argv[])
 		if ( i % WRITE_STEP_INTERVAL == 0 && lbm_gbl_config.output_filename != NULL )
 			save_frame_all_domain(fp, &mesh, &temp_render );
 	}
-	
+
 	//wait all before closing
 	MPI_Barrier(MPI_COMM_WORLD);
 

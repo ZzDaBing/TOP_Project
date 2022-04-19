@@ -36,7 +36,13 @@ clean:
 depend:
 	$(MAKEDEPEND) -Y. $(LBM_SOURCES) display.c
 
-.PHONY: clean all depend
+run:
+	mpiexec -n 4 ./lbm
+
+gif:
+	bash ./gen_animate_gif.sh resultat.raw output.gif
+
+.PHONY: clean all depend run gif
 
 # DO NOT DELETE
 

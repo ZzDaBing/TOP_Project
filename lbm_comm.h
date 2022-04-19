@@ -74,7 +74,7 @@ void lbm_comm_release( lbm_comm_t * mesh );
 void  lbm_comm_print( lbm_comm_t *mesh );
 
 /*******************  FUNCTION  *********************/
-void lbm_comm_sync_ghosts_wait( lbm_comm_t * mesh );
+//NOT USED void lbm_comm_sync_ghosts_wait( lbm_comm_t * mesh );
 void lbm_comm_ghost_exchange(lbm_comm_t * mesh, Mesh *mesh_to_process );
 
 /*******************  FUNCTION  *********************/
