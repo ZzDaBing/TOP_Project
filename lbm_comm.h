@@ -52,8 +52,8 @@ typedef struct lbm_comm_t_s
 	int bottom_id;
 	int corner_id[4];
 	/** Requète asynchrone en cours. **/
-	MPI_Request requests[32];
 	lbm_mesh_cell_t buffer;
+	MPI_Request requests[32];
 } lbm_comm_t;
 
 /*******************  FUNCTION  *********************/

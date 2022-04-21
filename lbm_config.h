@@ -38,7 +38,6 @@
 typedef struct lbm_config_s
 {
 	//discretisation
-	int iterations;
 	int width;
 	int height;
 	//obstacle
@@ -51,9 +50,11 @@ typedef struct lbm_config_s
 	//derived flow parameters
 	double kinetic_viscosity;
 	double relax_parameter;
+	//discretisation
+	int iterations;
 	//results
-	const char * output_filename;
 	int write_interval;
+	const char * output_filename;
 } lbm_config_t;
 
 /*****************  FUNCTIONS  *******************/
