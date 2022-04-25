@@ -76,10 +76,10 @@ void lbm_comm_init( lbm_comm_t * mesh_comm, int rank, int comm_size, int width, 
 	int rank_y;
 
 	//compute splitting
-	nb_y = lbm_helper_pgcd(comm_size,width);
-	nb_x = comm_size / nb_y;
-	//nb_x = lbm_helper_pgcd(comm_size,width);
-	//nb_y = comm_size / nb_x;
+	// nb_y = lbm_helper_pgcd(comm_size,width);
+	// nb_x = comm_size / nb_y;
+	nb_x = lbm_helper_pgcd(comm_size,height);
+	nb_y = comm_size / nb_x;
 
 	//check
 	assert(nb_x * nb_y == comm_size);
@@ -165,13 +165,13 @@ void lbm_comm_sync_ghosts_horizontal( lbm_comm_t * mesh, Mesh *mesh_to_process, 
 	switch (comm_type)
 	{
 		case COMM_SEND:
-			for( y = 0 ; y < mesh->height-2 ; y++ )
+			for( y = 0 ; y < mesh->height-1 ; y++ )
 				MPI_Send( &Mesh_get_col( mesh_to_process, x )[y], DIRECTIONS, MPI_DOUBLE, target_rank, 0, MPI_COMM_WORLD);
 
 				// MPI_Isend( &Mesh_get_col( mesh_to_process, x )[y], DIRECTIONS, MPI_DOUBLE, target_rank, 0, MPI_COMM_WORLD, &(mesh->requests[0]));
 			break;
 		case COMM_RECV:
-			for( y = 0 ; y < mesh->height-2 ; y++ )
+			for( y = 0 ; y < mesh->height-1 ; y++ )
 				MPI_Recv(  &Mesh_get_col( mesh_to_process, x )[y], DIRECTIONS, MPI_DOUBLE, target_rank, 0, MPI_COMM_WORLD,&status);
 			break;
 		default:
@@ -254,16 +254,15 @@ void lbm_comm_ghost_exchange(lbm_comm_t * mesh, Mesh *mesh_to_process )
 
 	//COMM_SEND
 	lbm_comm_sync_ghosts_horizontal(mesh,mesh_to_process,COMM_SEND,mesh->right_id,mesh->width - 2);
-	lbm_comm_sync_ghosts_horizontal(mesh,mesh_to_process,COMM_SEND,mesh->left_id,1);
+	lbm_comm_sync_ghosts_horizontal(mesh,mesh_to_process,COMM_RECV,mesh->left_id,0);
 	lbm_comm_sync_ghosts_vertical(mesh,mesh_to_process,COMM_SEND,mesh->bottom_id,mesh->height - 2);
 	lbm_comm_sync_ghosts_vertical(mesh,mesh_to_process,COMM_SEND,mesh->top_id,1);
 	lbm_comm_sync_ghosts_diagonal(mesh,mesh_to_process,COMM_SEND,mesh->corner_id[CORNER_TOP_LEFT],1,1);
 	lbm_comm_sync_ghosts_diagonal(mesh,mesh_to_process,COMM_SEND,mesh->corner_id[CORNER_TOP_RIGHT],mesh->width - 2,1);
 	lbm_comm_sync_ghosts_diagonal(mesh,mesh_to_process,COMM_SEND,mesh->corner_id[CORNER_BOTTOM_LEFT],1,mesh->height - 2);
 	lbm_comm_sync_ghosts_diagonal(mesh,mesh_to_process,COMM_SEND,mesh->corner_id[CORNER_BOTTOM_RIGHT],mesh->width - 2,mesh->height - 2);
-	
 	//COMM_RECV
-	lbm_comm_sync_ghosts_horizontal(mesh,mesh_to_process,COMM_RECV,mesh->left_id,0);
+	lbm_comm_sync_ghosts_horizontal(mesh,mesh_to_process,COMM_SEND,mesh->left_id,1);
 	lbm_comm_sync_ghosts_horizontal(mesh,mesh_to_process,COMM_RECV,mesh->right_id,mesh->width - 1);
 	lbm_comm_sync_ghosts_vertical(mesh,mesh_to_process,COMM_RECV,mesh->top_id,0);
 	lbm_comm_sync_ghosts_vertical(mesh,mesh_to_process,COMM_RECV,mesh->bottom_id,mesh->height - 1);
@@ -291,9 +290,6 @@ void lbm_comm_ghost_exchange(lbm_comm_t * mesh, Mesh *mesh_to_process )
 	// 		MPI_Wait(&(mesh->requests[0]), MPI_STATUS_IGNORE);
 	// 	}
 	// }
-
-	//wait for IO to finish, VERY important, do not remove.
-	FLUSH_INOUT();
 }
 
 /*******************  FUNCTION  *********************/
