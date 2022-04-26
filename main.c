@@ -196,7 +196,6 @@ int main(int argc, char * argv[])
 			save_frame_all_domain(fp, &mesh, &temp_render );
 	}
 	double stop = MPI_Wtime();
-	printf("That took %f seconds\n",stop-start);
 	
 	//wait all before closing
 	MPI_Barrier(MPI_COMM_WORLD);
