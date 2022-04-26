@@ -165,6 +165,7 @@ int main(int argc, char * argv[])
 	MPI_Barrier(MPI_COMM_WORLD);
 
 	//time steps
+	double start = MPI_Wtime();
 	for ( i = 1 ; i < ITERATIONS ; i++ )
 	{
 		//print progress
@@ -194,7 +195,9 @@ int main(int argc, char * argv[])
 		if ( i % WRITE_STEP_INTERVAL == 0 && lbm_gbl_config.output_filename != NULL )
 			save_frame_all_domain(fp, &mesh, &temp_render );
 	}
-
+	double stop = MPI_Wtime();
+	printf("That took %f seconds\n",stop-start);
+	
 	//wait all before closing
 	MPI_Barrier(MPI_COMM_WORLD);
 
@@ -202,6 +205,8 @@ int main(int argc, char * argv[])
 	{
 		printf("Progress [%5d / %5d]\nEnd\n",i,ITERATIONS);
 		close_file(fp);
+
+		printf("That took %f seconds\n",stop-start);
 	}
 
 	//free memory
