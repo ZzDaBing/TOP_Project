@@ -5,6 +5,7 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <math.h>
+#include <omp.h>
 #include <stdint.h>
 #include "lbm_config.h"
 #include "lbm_struct.h"
@@ -153,6 +154,7 @@ int main(int argc, char * argv[])
 	if( rank == RANK_MASTER )
 		fp = open_output_file(&mesh_comm);
 
+	double start = MPI_Wtime();
 	//setup initial conditions on mesh
 	setup_init_state( &mesh, &mesh_type, &mesh_comm);
 	setup_init_state( &temp, &mesh_type, &mesh_comm);
@@ -165,7 +167,6 @@ int main(int argc, char * argv[])
 	MPI_Barrier(MPI_COMM_WORLD);
 
 	//time steps
-	double start = MPI_Wtime();
 	for ( i = 1 ; i < ITERATIONS ; i++ )
 	{
 		//print progress

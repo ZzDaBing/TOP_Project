@@ -280,6 +280,7 @@ void special_cells(Mesh * mesh, lbm_mesh_type_t * mesh_type, const lbm_comm_t * 
 	int i,j;
 
 	//loop on all inner cells
+#pragma omp parallel for default(shared) private(j) schedule(runtime)
 	for( i = 1 ; i < mesh->width - 1 ; i++ )
 	{
 		for( j = 1 ; j < mesh->height - 1 ; j++)
@@ -317,6 +318,7 @@ void collision(Mesh * mesh_out,const Mesh * mesh_in)
 	assert(mesh_in->height == mesh_out->height);
 
 	//loop on all inner cells
+#pragma omp parallel for default(shared) private(i) schedule(runtime)
 	for( j = 1 ; j < mesh_in->height - 1 ; j++)
 		for( i = 1 ; i < mesh_in->width - 1 ; i++ )
 			compute_cell_collision(Mesh_get_cell(mesh_out, i, j),Mesh_get_cell(mesh_in, i, j));
@@ -335,6 +337,7 @@ void propagation(Mesh * mesh_out,const Mesh * mesh_in)
 	int ii,jj;
 
 	//loop on all cells
+#pragma omp parallel for shared(mesh_out,mesh_in,j) private(i,k,ii,jj) schedule(runtime)
 	for ( j = 0 ; j < mesh_out->height ; j++)
 	{
 		for ( i = 0 ; i < mesh_out->width; i++)

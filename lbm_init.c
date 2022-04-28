@@ -24,6 +24,7 @@ void init_cond_velocity_0_density_1(Mesh * mesh)
 	assert(mesh != NULL);
 
 	//loop on all cells
+#pragma omp parallel for default(shared) private(j) schedule(runtime)
 	for ( i = 0 ; i <  mesh->width ; i++)
 		for ( j = 0 ; j <  mesh->height ; j++)
 			for ( k = 0 ; k < DIRECTIONS ; k++)
@@ -41,6 +42,7 @@ void setup_init_state_circle_obstacle(Mesh * mesh, lbm_mesh_type_t * mesh_type, 
 	int i,j,k;
 
 	//loop on nodes
+#pragma omp parallel for default(shared) private(j) schedule(runtime)
 	for ( i =  mesh_comm->x; i < mesh->width + mesh_comm->x ; i++)
 	{
 		for ( j =  mesh_comm->y ; j <  mesh->height + mesh_comm->y ; j++)

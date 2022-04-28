@@ -317,6 +317,7 @@ void save_frame_all_domain( FILE * fp, Mesh *source_mesh, Mesh *temp )
 			/* Rank 0 renders its local Mesh */
 			save_frame(fp,source_mesh);
 			/* Rank 0 receives & render other processes meshes */
+
 			for( i = 1 ; i < comm_size ; i++ )
 			{
 				MPI_Recv( temp->cells, source_mesh->width  * source_mesh->height * DIRECTIONS, MPI_DOUBLE, i, 0, MPI_COMM_WORLD, &status );
