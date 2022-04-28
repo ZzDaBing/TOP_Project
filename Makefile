@@ -42,7 +42,13 @@ run:
 gif:
 	bash ./gen_animate_gif.sh resultat.raw output.gif
 
-.PHONY: clean all depend run gif
+# check:
+# 	./display --checksum ../ref_resultat_200.raw 100
+# 	./display --checksum resultat.raw 100
+# 	./display --checksum ../ref_resultat_200.raw 199
+# 	./display --checksum resultat.raw 199
+
+.PHONY: clean all depend run gif check
 
 # DO NOT DELETE
 
